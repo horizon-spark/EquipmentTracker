@@ -33,6 +33,7 @@ class Supply extends Model
             'id_supply',
             'id_service'
         )
+            ->using(ServiceSupply::class)
             ->withPivot('quantity_used');
     }
 }

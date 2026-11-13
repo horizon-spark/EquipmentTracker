@@ -161,7 +161,11 @@ class DatabaseIntegrityTest extends TestCase
 
         $this->expectException(QueryException::class);
 
-        $service->supplies()->attach($supply->id_supply, ['quantity_used' => 0]);
+        DB::table('service_supplies')->insert([
+            'id_service' => $service->id_service,
+            'id_supply' => $supply->id_supply,
+            'quantity_used' => 0,
+        ]);
     }
 
     private function createEmployee(): Employee

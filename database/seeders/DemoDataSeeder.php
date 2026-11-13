@@ -30,7 +30,10 @@ class DemoDataSeeder extends Seeder
             ->map(fn (array $attributes) => TypeEquipment::factory()->create($attributes));
 
         $supplies = collect(SupplyFactory::catalog())
-            ->map(fn (string $name) => Supply::factory()->create(['name_supplies' => $name]));
+            ->map(fn (string $name) => Supply::factory()->create([
+                'name_supplies' => $name,
+                'quantity' => fake()->numberBetween(300, 500),
+            ]));
 
         $assignedEquipment = Equipment::factory()
             ->count(20)
