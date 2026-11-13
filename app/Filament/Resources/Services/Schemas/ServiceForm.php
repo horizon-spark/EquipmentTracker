@@ -20,7 +20,7 @@ class ServiceForm
                     ->preload()
                     ->required(),
 
-                DatePicker::make('data_service')
+                DatePicker::make('service_date')
                     ->label('Дата обслуживания')
                     ->displayFormat('d.m.Y')
                     ->required(),

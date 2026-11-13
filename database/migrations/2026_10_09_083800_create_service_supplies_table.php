@@ -15,6 +15,7 @@ return new class extends Migration
                 ->cascadeOnUpdate();
 
             $table->foreignId('id_supply')
+                ->index()
                 ->constrained('supplies', 'id_supply')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();

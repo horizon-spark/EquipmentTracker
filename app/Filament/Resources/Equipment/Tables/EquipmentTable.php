@@ -23,6 +23,11 @@ class EquipmentTable
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('serial_number')
+                    ->label('Серийный номер')
+                    ->searchable()
+                    ->toggleable(),
+
                 TextColumn::make('type.name_type')
                     ->label('Тип')
                     ->searchable()

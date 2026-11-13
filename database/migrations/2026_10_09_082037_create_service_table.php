@@ -10,10 +10,11 @@ return new class extends Migration
     {
         Schema::create('service', function (Blueprint $table) {
             $table->bigIncrements('id_service');
-            $table->date('data_service');
+            $table->date('service_date');
             $table->string('description', 255)->nullable();
 
             $table->foreignId('id_equipment')
+                ->index()
                 ->constrained('equipment', 'id_equipment')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();

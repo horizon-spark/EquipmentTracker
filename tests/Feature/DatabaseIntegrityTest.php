@@ -53,7 +53,7 @@ class DatabaseIntegrityTest extends TestCase
     {
         $service = Service::create([
             'id_equipment' => $this->createEquipment()->id_equipment,
-            'data_service' => now()->toDateString(),
+            'service_date' => now()->toDateString(),
         ]);
 
         $this->expectException(QueryException::class);
@@ -65,7 +65,7 @@ class DatabaseIntegrityTest extends TestCase
     {
         $service = Service::create([
             'id_equipment' => $this->createEquipment()->id_equipment,
-            'data_service' => now()->toDateString(),
+            'service_date' => now()->toDateString(),
         ]);
 
         $supply = Supply::create([
@@ -89,7 +89,7 @@ class DatabaseIntegrityTest extends TestCase
     {
         $service = Service::create([
             'id_equipment' => $this->createEquipment()->id_equipment,
-            'data_service' => now()->toDateString(),
+            'service_date' => now()->toDateString(),
         ]);
 
         $supply = Supply::create([
@@ -104,6 +104,66 @@ class DatabaseIntegrityTest extends TestCase
         $supply->delete();
     }
 
+    public function test_inventory_number_must_be_unique(): void
+    {
+        $this->createEquipment('INV-002');
+
+        $this->expectException(QueryException::class);
+
+        Equipment::create([
+            'id_type' => TypeEquipment::create(['name_type' => 'МФУ'])->id_type,
+            'inv_number' => 'INV-002',
+        ]);
+    }
+
+    public function test_serial_number_must_be_unique_when_present(): void
+    {
+        $this->createEquipment('INV-003', 'SN-001');
+
+        $this->expectException(QueryException::class);
+
+        Equipment::create([
+            'id_type' => TypeEquipment::create(['name_type' => 'МФУ'])->id_type,
+            'inv_number' => 'INV-004',
+            'serial_number' => 'SN-001',
+        ]);
+    }
+
+    public function test_equipment_may_have_empty_serial_numbers(): void
+    {
+        $this->createEquipment('INV-005');
+        $this->createEquipment('INV-006');
+
+        $this->assertDatabaseCount('equipment', 2);
+    }
+
+    public function test_supply_quantity_cannot_be_negative(): void
+    {
+        $this->expectException(QueryException::class);
+
+        Supply::create([
+            'name_supplies' => 'Тонер',
+            'quantity' => -1,
+        ]);
+    }
+
+    public function test_service_supply_quantity_used_must_be_positive(): void
+    {
+        $service = Service::create([
+            'id_equipment' => $this->createEquipment()->id_equipment,
+            'service_date' => now()->toDateString(),
+        ]);
+
+        $supply = Supply::create([
+            'name_supplies' => 'Тонер',
+            'quantity' => 1,
+        ]);
+
+        $this->expectException(QueryException::class);
+
+        $service->supplies()->attach($supply->id_supply, ['quantity_used' => 0]);
+    }
+
     private function createEmployee(): Employee
     {
         return Employee::create([
@@ -116,11 +176,12 @@ class DatabaseIntegrityTest extends TestCase
         ]);
     }
 
-    private function createEquipment(): Equipment
+    private function createEquipment(string $invNumber = 'INV-002', ?string $serialNumber = null): Equipment
     {
         return Equipment::create([
             'id_type' => TypeEquipment::create(['name_type' => 'Принтер'])->id_type,
-            'inv_number' => 'INV-002',
+            'inv_number' => $invNumber,
+            'serial_number' => $serialNumber,
         ]);
     }
 }

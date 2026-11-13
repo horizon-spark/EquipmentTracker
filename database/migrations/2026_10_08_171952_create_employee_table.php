@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('full_name', 45);
 
             $table->foreignId('id_location')
+                ->index()
                 ->constrained('location', 'id_location')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();

@@ -21,7 +21,6 @@ class TypeEquipment extends Model
         'name_type',
         'manufacturer',
         'model',
-        'serial_number',
     ];
 
     public function equipment(): HasMany

@@ -21,6 +21,7 @@ class Equipment extends Model
     protected $fillable = [
         'id_type',
         'inv_number',
+        'serial_number',
         'assignment_date',
         'id_employee',
     ];

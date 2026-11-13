@@ -30,10 +30,6 @@ class TypeEquipmentTable
                 TextColumn::make('model')
                     ->label('Модель')
                     ->searchable(),
-
-                TextColumn::make('serial_number')
-                    ->label('Серийный номер')
-                    ->searchable(),
             ])
             ->recordActions([
                 EditAction::make(),

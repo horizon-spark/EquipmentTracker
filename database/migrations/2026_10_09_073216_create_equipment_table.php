@@ -12,15 +12,18 @@ return new class extends Migration
             $table->bigIncrements('id_equipment');
 
             $table->foreignId('id_type')
+                ->index()
                 ->constrained('type_equipment', 'id_type')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->string('inv_number', 20);
+            $table->string('inv_number', 20)->unique();
+            $table->string('serial_number', 45)->nullable()->unique();
             $table->date('assignment_date')->nullable();
 
             $table->foreignId('id_employee')
                 ->nullable()
+                ->index()
                 ->constrained('employee', 'id_employee')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();

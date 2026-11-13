@@ -16,7 +16,13 @@ class EquipmentForm
                 TextInput::make('inv_number')
                     ->label('Инвентарный номер')
                     ->required()
-                    ->maxLength(20),
+                    ->maxLength(20)
+                    ->unique(ignoreRecord: true),
+
+                TextInput::make('serial_number')
+                    ->label('Серийный номер')
+                    ->maxLength(45)
+                    ->unique(ignoreRecord: true),
 
                 Select::make('id_type')
                     ->label('Тип оборудования')

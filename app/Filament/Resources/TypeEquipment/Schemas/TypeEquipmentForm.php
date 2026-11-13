@@ -23,10 +23,6 @@ class TypeEquipmentForm
                 TextInput::make('model')
                     ->label('Модель')
                     ->maxLength(45),
-
-                TextInput::make('serial_number')
-                    ->label('Серийный номер')
-                    ->maxLength(45),
             ]);
     }
 }

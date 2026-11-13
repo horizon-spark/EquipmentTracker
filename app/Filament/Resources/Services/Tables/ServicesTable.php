@@ -18,7 +18,7 @@ class ServicesTable
                     ->label('ID')
                     ->sortable(),
 
-                TextColumn::make('data_service')
+                TextColumn::make('service_date')
                     ->label('Дата')
                     ->date('d.m.Y')
                     ->sortable(),
@@ -37,7 +37,7 @@ class ServicesTable
                     ->limit(50)
                     ->searchable(),
             ])
-            ->defaultSort('data_service', 'desc')   // свежие сверху
+            ->defaultSort('service_date', 'desc')   // свежие сверху
             ->recordActions([
                 EditAction::make(),
             ])

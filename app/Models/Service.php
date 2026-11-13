@@ -19,13 +19,13 @@ class Service extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'data_service',
+        'service_date',
         'description',
         'id_equipment',
     ];
 
     protected $casts = [
-        'data_service' => 'date',
+        'service_date' => 'date',
     ];
 
     public function equipment(): BelongsTo
