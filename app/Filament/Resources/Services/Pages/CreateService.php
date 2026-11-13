@@ -12,6 +12,11 @@ class CreateService extends CreateRecord
 {
     protected static string $resource = ServiceResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Создать обслуживание';
+    }
+
     protected function handleRecordCreation(array $data): Model
     {
         $supplyItems = $data['supplies'] ?? [];

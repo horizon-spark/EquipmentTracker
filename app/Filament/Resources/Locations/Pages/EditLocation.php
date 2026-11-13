@@ -10,6 +10,11 @@ class EditLocation extends EditRecord
 {
     protected static string $resource = LocationResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Редактировать локацию';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

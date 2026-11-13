@@ -27,6 +27,8 @@ class ServiceForm
 
                 DatePicker::make('service_date')
                     ->label('Дата обслуживания')
+                    ->native(false)
+                    ->locale('ru')
                     ->displayFormat('d.m.Y')
                     ->required(),
 

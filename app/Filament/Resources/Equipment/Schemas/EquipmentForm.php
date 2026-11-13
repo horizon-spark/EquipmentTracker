@@ -39,6 +39,8 @@ class EquipmentForm
 
                 DatePicker::make('assignment_date')
                     ->label('Дата выдачи')
+                    ->native(false)
+                    ->locale('ru')
                     ->displayFormat('d.m.Y'),
             ]);
     }

@@ -10,6 +10,11 @@ class EditEmployee extends EditRecord
 {
     protected static string $resource = EmployeeResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Редактировать сотрудника';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

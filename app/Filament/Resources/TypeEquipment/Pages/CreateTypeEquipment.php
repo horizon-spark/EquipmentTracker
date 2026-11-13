@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateTypeEquipment extends CreateRecord
 {
     protected static string $resource = TypeEquipmentResource::class;
+
+    public function getTitle(): string
+    {
+        return 'Создать тип оборудования';
+    }
 }

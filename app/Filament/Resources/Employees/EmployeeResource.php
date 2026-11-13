@@ -18,7 +18,19 @@ class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Сотрудник';
+
+    protected static ?string $pluralModelLabel = 'Сотрудники';
+
+    protected static ?string $navigationLabel = 'Сотрудники';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Учёт';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'full_name';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
     public static function form(Schema $schema): Schema
     {

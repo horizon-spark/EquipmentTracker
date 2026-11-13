@@ -18,7 +18,19 @@ class TypeEquipmentResource extends Resource
 {
     protected static ?string $model = TypeEquipment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Тип оборудования';
+
+    protected static ?string $pluralModelLabel = 'Типы оборудования';
+
+    protected static ?string $navigationLabel = 'Типы оборудования';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Справочники';
+
+    protected static ?int $navigationSort = 31;
+
+    protected static ?string $recordTitleAttribute = 'name_type';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
     public static function form(Schema $schema): Schema
     {

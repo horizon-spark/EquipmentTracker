@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSupply extends CreateRecord
 {
     protected static string $resource = SupplyResource::class;
+
+    public function getTitle(): string
+    {
+        return 'Создать расходник';
+    }
 }

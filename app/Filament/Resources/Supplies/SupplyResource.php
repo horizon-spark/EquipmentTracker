@@ -18,7 +18,19 @@ class SupplyResource extends Resource
 {
     protected static ?string $model = Supply::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Расходник';
+
+    protected static ?string $pluralModelLabel = 'Расходники';
+
+    protected static ?string $navigationLabel = 'Расходники';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Склад';
+
+    protected static ?int $navigationSort = 10;
+
+    protected static ?string $recordTitleAttribute = 'name_supplies';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
 
     public static function form(Schema $schema): Schema
     {
@@ -44,5 +56,22 @@ class SupplyResource extends Resource
             'create' => CreateSupply::route('/create'),
             'edit' => EditSupply::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        $lowStockCount = Supply::query()->where('quantity', '<=', 10)->count();
+
+        return $lowStockCount > 0 ? (string) $lowStockCount : null;
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'danger';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Расходники с низким остатком (10 и меньше)';
     }
 }

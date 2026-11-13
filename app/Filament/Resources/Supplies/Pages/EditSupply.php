@@ -10,6 +10,11 @@ class EditSupply extends EditRecord
 {
     protected static string $resource = SupplyResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Редактировать расходник';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

@@ -18,7 +18,19 @@ class LocationResource extends Resource
 {
     protected static ?string $model = Location::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Локация';
+
+    protected static ?string $pluralModelLabel = 'Локации';
+
+    protected static ?string $navigationLabel = 'Локации';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Справочники';
+
+    protected static ?int $navigationSort = 30;
+
+    protected static ?string $recordTitleAttribute = 'city';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMapPin;
 
     public static function form(Schema $schema): Schema
     {

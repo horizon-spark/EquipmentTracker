@@ -10,6 +10,11 @@ class EditEquipment extends EditRecord
 {
     protected static string $resource = EquipmentResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Редактировать оборудование';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

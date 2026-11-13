@@ -18,7 +18,19 @@ class EquipmentResource extends Resource
 {
     protected static ?string $model = Equipment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Оборудование';
+
+    protected static ?string $pluralModelLabel = 'Оборудование';
+
+    protected static ?string $navigationLabel = 'Оборудование';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Учёт';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $recordTitleAttribute = 'inv_number';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedComputerDesktop;
 
     public static function form(Schema $schema): Schema
     {

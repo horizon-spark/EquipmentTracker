@@ -10,6 +10,11 @@ class EditService extends EditRecord
 {
     protected static string $resource = ServiceResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Редактировать обслуживание';
+    }
+
     protected function getHeaderActions(): array
     {
         return [
