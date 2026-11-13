@@ -1,58 +1,347 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# EquipmentTracker — учёт ИТ-оборудования
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Веб-приложение для учёта ИТ-оборудования, сотрудников, локаций, обслуживания и расходников. Интерфейс построен на Filament 4, полностью русифицирован и использует собственную тему оформления.
 
-## About Laravel
+## Возможности
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Учёт оборудования с инвентарными и серийными номерами.
+- Закрепление оборудования за сотрудниками и локациями.
+- Справочник типов оборудования: производитель, модель.
+- Учёт обслуживания с указанием использованных расходников.
+- Автоматическое списание расходников со склада при обслуживании.
+- Контроль остатков: нельзя списать больше, чем есть на складе.
+- Возврат расходников на склад при отвязке или удалении обслуживания.
+- Дашборд со статистикой и графиком обслуживаний.
+- Светлая и тёмная темы.
+- Полностью русский интерфейс, даты в формате `дд.мм.гггг`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Стек
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Компонент | Версия |
+|---|---|
+| PHP | 8.3+ |
+| Laravel | 13.x |
+| Filament | 4.x |
+| База данных | SQLite по умолчанию, возможны PostgreSQL/MySQL |
+| Frontend | Vite, Tailwind CSS 4 |
+| Тесты | PHPUnit 12 |
+| Форматирование | Laravel Pint |
 
-## Learning Laravel
+## Требования
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8.3 или новее с расширениями `pdo_sqlite` (или `pdo_mysql`/`pdo_pgsql`), `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `fileinfo`.
+- Composer 2.
+- Node.js `^20.19.0` или `>=22.12.0` и npm.
+- Свободный порт `8000` для локального сервера (можно изменить).
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Проверить версии:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+php -v
+composer -V
+node -v
+npm -v
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Быстрый старт
 
-## Contributing
+```bash
+git clone <url-репозитория> EquipmentTracker
+cd EquipmentTracker
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Установка зависимостей, создание .env и SQLite-базы, миграции, сборка фронтенда
+composer run setup
 
-## Code of Conduct
+# Демонстрационные данные: пользователь, оборудование, сотрудники, обслуживания
+php artisan db:seed
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Запуск сервера, очереди и Vite
+composer run dev
+```
 
-## Security Vulnerabilities
+После запуска приложение доступно по адресу:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Приложение: `http://localhost:8000`
+- Админ-панель: `http://localhost:8000/admin`
 
-## License
+Корневой маршрут `/` перенаправляет в админ-панель.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Демо-доступ
+
+```
+E-mail: test@example.com
+Пароль: password
+```
+
+> Данные создаются только для локальной разработки. Перед публикацией в продакшене смените пароль и отключите демо-сидер.
+
+### Ручная установка
+
+Если не хотите использовать `composer run setup`:
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+
+# SQLite-файл не хранится в git
+touch database/database.sqlite
+
+php artisan migrate
+php artisan db:seed
+
+npm install
+npm run build
+
+php artisan serve
+```
+
+В отдельном терминале для разработки:
+
+```bash
+npm run dev
+```
+
+### Пересоздание базы с демо-данными
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Команда удаляет все таблицы, заново применяет миграции и заполняет базу демонстрационными данными.
+
+## Переменные окружения
+
+Основные параметры в `.env`:
+
+```dotenv
+APP_NAME="ИТ-Учёт"
+APP_ENV=local
+APP_URL=http://localhost:8000
+APP_LOCALE=ru
+APP_FALLBACK_LOCALE=ru
+APP_FAKER_LOCALE=ru_RU
+
+DB_CONNECTION=sqlite
+```
+
+Для SQLite база находится в `database/database.sqlite` и не попадает в git. Для PostgreSQL или MySQL измените блок `DB_*` и создайте базу вручную.
+
+После изменения `.env` при необходимости очистите кеш конфигурации:
+
+```bash
+php artisan config:clear
+```
+
+## Демонстрационные данные
+
+`DemoDataSeeder` создаёт:
+
+- 5 локаций;
+- 15 сотрудников;
+- 10 типов оборудования;
+- 10 расходников;
+- 30 единиц оборудования: 20 выданных сотрудникам и 10 на складе;
+- 25 записей обслуживания;
+- связи обслуживаний с расходниками.
+
+Сидер не является идемпотентным: повторный `php artisan db:seed` добавит ещё один набор данных.
+
+## Структура базы данных
+
+```mermaid
+erDiagram
+    location ||--o{ employee : "сотрудники"
+    employee ||--o{ equipment : "закреплено"
+    type_equipment ||--o{ equipment : "тип"
+    equipment ||--o{ service : "обслуживание"
+    service ||--o{ service_supplies : "расходники"
+    supplies ||--o{ service_supplies : "списания"
+
+    location {
+        bigint id_location PK
+        varchar city
+        varchar office
+        varchar address
+    }
+
+    employee {
+        bigint id_employee PK
+        varchar full_name
+        bigint id_location FK
+    }
+
+    type_equipment {
+        bigint id_type PK
+        varchar name_type
+        varchar manufacturer
+        varchar model
+    }
+
+    equipment {
+        bigint id_equipment PK
+        bigint id_type FK
+        varchar inv_number UK
+        varchar serial_number UK
+        date assignment_date
+        bigint id_employee FK
+    }
+
+    service {
+        bigint id_service PK
+        date service_date
+        varchar description
+        bigint id_equipment FK
+    }
+
+    supplies {
+        bigint id_supply PK
+        varchar name_supplies
+        int quantity
+    }
+
+    service_supplies {
+        bigint id_service PK
+        bigint id_supply PK
+        int quantity_used
+    }
+```
+
+### Таблицы
+
+| Таблица | Назначение |
+|---|---|
+| `location` | Локации: город, офис, адрес |
+| `employee` | Сотрудники организации. Отдельная таблица, не путать с `users` для аутентификации |
+| `type_equipment` | Справочник типов оборудования: название, производитель, модель |
+| `equipment` | Единицы оборудования: инвентарный и серийный номера, тип, сотрудник, дата выдачи |
+| `supplies` | Расходники и их остаток на складе |
+| `service` | Записи обслуживания оборудования |
+| `service_supplies` | Pivot-таблица: какие расходники и в каком количестве использованы при обслуживании |
+
+Особенности схемы:
+
+- используются явные имена первичных ключей (`id_equipment`, `id_employee` и т.д.);
+- `equipment.inv_number` и `equipment.serial_number` уникальны;
+- `service_supplies` имеет составной первичный ключ `(id_service, id_supply)`;
+- внешние ключи настроены на `restrict`, `cascade` или `set null` в зависимости от сущности;
+- на остатки действуют ограничения `quantity >= 0` и `quantity_used > 0`.
+
+## Бизнес-логика списания расходников
+
+Логика реализована в pivot-модели `App\Models\ServiceSupply` и работает как через Filament, так и при прямых вызовах Eloquent:
+
+| Действие | Результат |
+|---|---|
+| Добавление расходника к обслуживанию | Проверка остатка и списание `quantity_used` |
+| Увеличение `quantity_used` | Списание разницы |
+| Уменьшение `quantity_used` | Возврат разницы на склад |
+| Отвязка расходника | Возврат всего израсходованного количества |
+| Удаление обслуживания | Возврат всех связанных расходников |
+
+Все изменения выполняются в транзакции с блокировкой строки расходника. При нехватке остатка выбрасывается ошибка валидации, а изменения откатываются.
+
+Расходники можно выбрать:
+
+- при создании обслуживания — блок «Использованные расходники» в форме;
+- при редактировании — через relation manager «Расходники».
+
+## Интерфейс
+
+- Русская локаль Laravel и Filament.
+- Собственная тема Filament: индиго-фиолетовая палитра, градиентный фон, тёмная боковая панель, стеклянные карточки, скругления и мягкие тени.
+- Логотип и favicon `public/images/`.
+- Навигация сгруппирована:
+  - **Учёт** — оборудование и сотрудники;
+  - **Склад** — расходники;
+  - **Сервис** — обслуживания;
+  - **Справочники** — локации и типы оборудования.
+- Дашборд «Обзор»: карточки статистики и график обслуживаний за последние 6 месяцев.
+- Поддержка светлой и тёмной темы.
+
+Исходники темы: `resources/css/filament/admin/theme.css`.
+
+После изменения темы или стилей пересоберите фронтенд:
+
+```bash
+npm run build
+```
+
+## Тесты
+
+```bash
+php artisan test
+# или
+composer test
+```
+
+Покрыты:
+
+- целостность внешних ключей;
+- уникальность инвентарных и серийных номеров;
+- ограничения остатков;
+- списание, корректировка и возврат расходников;
+- создание обслуживания с расходниками;
+- откат при нехватке остатка.
+
+Сейчас в проекте 24 теста.
+
+Форматирование кода:
+
+```bash
+vendor/bin/pint
+```
+
+## Структура проекта
+
+```text
+app/
+├── Filament/
+│   ├── Pages/Dashboard.php          # страница «Обзор»
+│   ├── Resources/                   # CRUD-ресурсы Filament
+│   └── Widgets/                     # статистика и график
+├── Models/                          # Eloquent-модели и pivot ServiceSupply
+└── Providers/
+    ├── AppServiceProvider.php
+    └── Filament/AdminPanelProvider.php
+
+database/
+├── factories/                       # фабрики демо-данных
+├── migrations/                      # схема БД
+└── seeders/                         # DatabaseSeeder и DemoDataSeeder
+
+lang/ru/                             # русские переводы Laravel
+resources/css/filament/admin/        # кастомная тема Filament
+public/images/                       # логотип и favicon
+tests/Feature/                       # feature-тесты
+routes/web.php                       # редирект / -> /admin
+```
+
+## Полезные команды
+
+```bash
+composer run dev             # сервер + очередь + Vite
+php artisan serve            # только Laravel-сервер
+npm run dev                  # только Vite
+npm run build                # production-сборка фронтенда
+php artisan migrate          # применить миграции
+php artisan db:seed          # демо-данные
+php artisan migrate:fresh --seed  # пересоздать БД с демо-данными
+php artisan test             # тесты
+vendor/bin/pint              # форматирование PHP
+```
+
+## Ограничения
+
+- Нет ролей и разграничения прав: любой авторизованный пользователь имеет полный доступ к панели.
+- Нет журнала движений склада: хранится текущий остаток и количество, использованное в обслуживаниях.
+- Демо-сидер не идемпотентен.
+- Панель одна; отдельного API или клиентского приложения нет.
+
+## Возможные направления развития
+
+- Роли и политики доступа.
+- Журнал движений склада (приход, списание, возврат).
+- Статусы оборудования: на складе, выдано, в ремонте, списано.
+- Уведомления о низком остатке расходников.
+- Импорт и экспорт оборудования и расходников.
