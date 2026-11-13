@@ -9,16 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employee', function (Blueprint $table) {
-            $table->bigIncrements('id_employee'); 
+            $table->bigIncrements('id_employee');
             $table->string('full_name', 45);
 
-            $table->integer('id_location');
-
-            $table->foreign('id_location')
-                ->references('id_location')
-                ->on('location')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
+            $table->foreignId('id_location')
+                ->constrained('location', 'id_location')
+                ->restrictOnDelete()
+                ->cascadeOnUpdate();
         });
     }
 

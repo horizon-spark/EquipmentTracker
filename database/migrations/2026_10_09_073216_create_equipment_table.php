@@ -11,22 +11,19 @@ return new class extends Migration
         Schema::create('equipment', function (Blueprint $table) {
             $table->bigIncrements('id_equipment');
 
-            $table->integer('id_type');
+            $table->foreignId('id_type')
+                ->constrained('type_equipment', 'id_type')
+                ->restrictOnDelete()
+                ->cascadeOnUpdate();
+
             $table->string('inv_number', 20);
             $table->date('assignment_date')->nullable();
-            $table->integer('id_employee')->nullable();
 
-            $table->foreign('id_type')
-                ->references('id_type')
-                ->on('type_equipment')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
-
-            $table->foreign('id_employee')
-                ->references('id_employee')
-                ->on('employee')
-                ->onDelete('set null')
-                ->onUpdate('cascade');
+            $table->foreignId('id_employee')
+                ->nullable()
+                ->constrained('employee', 'id_employee')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
         });
     }
 

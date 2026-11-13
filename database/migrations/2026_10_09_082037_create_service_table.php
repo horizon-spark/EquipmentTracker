@@ -12,13 +12,11 @@ return new class extends Migration
             $table->bigIncrements('id_service');
             $table->date('data_service');
             $table->string('description', 255)->nullable();
-            $table->integer('id_equipment');
 
-            $table->foreign('id_equipment')
-                ->references('id_equipment')
-                ->on('equipment')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
+            $table->foreignId('id_equipment')
+                ->constrained('equipment', 'id_equipment')
+                ->restrictOnDelete()
+                ->cascadeOnUpdate();
         });
     }
 
