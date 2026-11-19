@@ -28,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
+            ->databaseNotifications()
             ->brandName('ИТ-Учёт')
             ->favicon(asset('images/favicon.svg'))
             ->colors([

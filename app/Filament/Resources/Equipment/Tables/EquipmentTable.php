@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\Equipment\Tables;
 
+use App\Filament\Exports\EquipmentExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -42,6 +45,13 @@ class EquipmentTable
                     ->label('Дата выдачи')
                     ->date('d.m.Y')
                     ->sortable(),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->label('Экспорт CSV')
+                    ->modalHeading('Экспорт оборудования')
+                    ->icon(Heroicon::OutlinedArrowDownTray)
+                    ->exporter(EquipmentExporter::class),
             ])
             ->recordActions([
                 EditAction::make(),

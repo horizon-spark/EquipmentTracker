@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\TypeEquipment\Tables;
 
+use App\Filament\Exports\TypeEquipmentExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -30,6 +33,13 @@ class TypeEquipmentTable
                 TextColumn::make('model')
                     ->label('Модель')
                     ->searchable(),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->label('Экспорт CSV')
+                    ->modalHeading('Экспорт типов оборудования')
+                    ->icon(Heroicon::OutlinedArrowDownTray)
+                    ->exporter(TypeEquipmentExporter::class),
             ])
             ->recordActions([
                 EditAction::make(),

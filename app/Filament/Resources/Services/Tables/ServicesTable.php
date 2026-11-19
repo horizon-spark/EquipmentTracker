@@ -2,9 +2,12 @@
 
 namespace App\Filament\Resources\Services\Tables;
 
+use App\Filament\Exports\ServiceExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -38,6 +41,13 @@ class ServicesTable
                     ->searchable(),
             ])
             ->defaultSort('service_date', 'desc')   // свежие сверху
+            ->headerActions([
+                ExportAction::make()
+                    ->label('Экспорт CSV')
+                    ->modalHeading('Экспорт обслуживаний')
+                    ->icon(Heroicon::OutlinedArrowDownTray)
+                    ->exporter(ServiceExporter::class),
+            ])
             ->recordActions([
                 EditAction::make(),
             ])
