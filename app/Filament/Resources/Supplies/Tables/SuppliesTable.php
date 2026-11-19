@@ -31,17 +31,16 @@ class SuppliesTable
                     ->numeric()
                     ->sortable(),
             ])
-            ->headerActions([
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
                 ExportAction::make()
                     ->label('Экспорт CSV')
                     ->modalHeading('Экспорт расходников')
                     ->icon(Heroicon::OutlinedArrowDownTray)
                     ->exporter(SupplyExporter::class),
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
+
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
